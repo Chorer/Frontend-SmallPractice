@@ -4,6 +4,7 @@ var wrap = document.getElementsByClassName("wrap")[0];
 var left = document.getElementsByClassName("jt_left")[0];
 var right = document.getElementsByClassName("jt_right")[0];
 var buttons = document.getElementsByTagName("span");
+var button = document.getElementsByClassName("button")[0];
 
 //封装左右轮播一次的函数
 var newLeft = -600;
@@ -65,19 +66,38 @@ right.addEventListener("click",function(){
 	next();
 },false);
 
-//按钮事件绑定
-for(var i=0;i<buttons.length;i++){
-	(function(i){
-		buttons[i].addEventListener("click",function(){
-			//图片跳转
-			newLeft = -600 * (i+1);
-			move(wrap,newLeft);
-			//按钮高亮
-			index = i;
-			hightlight();
-		},false);
-	})(i);
-}
+//按钮事件绑定：事件委托
+button.addEventListener("click",function(event){
+	var text = event.target.innerText;
+	switch(text){
+		case "1":
+		newLeft = -600;index=0;break;
+		case "2":
+		newLeft = -1200;index=1;break;
+		case "3":
+		newLeft = -1800;index=2;break;
+		case "4":
+		newLeft = -2400;index=3;break;
+		case "5":
+		newLeft = -3000;index=4;break;
+	}
+	move(wrap,newLeft);
+	hightlight();
+});
+
+// 按钮事件绑定
+// for(var i=0;i<buttons.length;i++){
+// 	(function(i){
+// 		buttons[i].addEventListener("click",function(){
+// 			//图片跳转
+// 			newLeft = -600 * (i+1);
+// 			move(wrap,newLeft);
+// 			//按钮高亮
+// 			index = i;
+// 			hightlight();
+// 		},false);
+// 	})(i);
+// }
 
 //封装运动函数
 function move(obj,value){
